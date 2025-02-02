@@ -150,11 +150,12 @@ class PocketController extends Controller
     {
         // Validasi data yang masuk
         $request->validate([
-            'income' => 'required|numeric',
+            'income' => 'required|numeric|min:1',
             'date'   => 'required|date',
         ], [
             'income.required' => 'Nilai income tidak boleh kosong.',
             'income.numeric' => 'Nilai income harus angka.',
+            'income.min' => 'Nilai income tidak boleh 0.',
             'date.required' => 'Nilai tanggal tidak boleh kosong.',
             'date.date' => 'Format tanggal salah.',
         ]);

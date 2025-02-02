@@ -1,4 +1,4 @@
-<footer class="bg-dark text-white text-center py-3 mt-5">
+<footer class="transparent-bg text-white text-center py-3 mt-5">
     <div class="container">
         <p class="mb-0">&copy; 2025 MyPocket. All Rights Reserved.</p>
         {{-- <small>Made with ❤️ using Bootstrap</small> --}}
@@ -18,15 +18,37 @@
         });
     </script>
 @endif
+
 <script>
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-    $(document).ready(function() {
-        $('#btn-income').click(function() {
-            // $(this).text('unlock');
+    $(document).on('click', '#logout', function() {
+
+        Swal.fire({
+            title: "Apakah Anda yakin?",
+            text: "Anda akan logout dari sistem!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Ya, logout!",
+            cancelButtonText: "Batal"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `{{ route('logout') }}`,
+                    type: "POST",
+                    dataType: 'json',
+                    data: {
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function() {
+                        window.location.href = "{{ route('login') }}";
+                    },
+                });
+            }
         });
     });
 </script>
+
 @stack('script')
 
 </body>

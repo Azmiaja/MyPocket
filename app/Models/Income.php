@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Income extends Model
 {
@@ -14,8 +15,11 @@ class Income extends Model
     /**
      * Kolom-kolom yang dapat diisi secara massal.
      */
-    protected $fillable = [
-        'income', // Pendapatan
-        'date',   // Tanggal transaksi
-    ];
+
+    protected $fillable = ['user_id', 'income', 'date'];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

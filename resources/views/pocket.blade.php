@@ -1,11 +1,11 @@
         @extends('layouts.app')
         @section('container')
-            <div class="container mt-5">
+            <div class="container">
                 <div class="row row-cols-lg-2 row-cols-1 g-4"  data-bs-spy="scroll" data-bs-target=".comtainer" data-bs-smooth-scroll="true">
                     <div class="col">
                         <div class="row row-cols-1 g-4">
                             <div class="col">
-                                <div class="card shadow">
+                                <div class="card transparent-bg text-light shadow">
                                     <div class="card-body">
                                         <h5 class="card-title fw-bold text-uppercase">Income</h5>
                                         <div class="mt-4">
@@ -35,11 +35,11 @@
                                                         <span class="input-group-text" id="basic-addon1"><i
                                                                 class="ri-calendar-schedule-fill"></i></span>
                                                         <input type="date" class="form-control" id="frDate"
-                                                            name="date">
+                                                            name="date" value="{{ old('date') }}">
                                                     </div>
                                                 </div>
                                                 <button type="submit" id="btn-income"
-                                                    class="btn btn-warning fw-bold text-success">Save</button>
+                                                    class="btn btn-warning fw-bold text-light">Save</button>
                                                 <a href="#income" class="btn btn-primary fw-bold">View <i
                                                         class="ri-arrow-down-double-fill"></i></a>
                                             </form>
@@ -48,10 +48,10 @@
                                 </div>
                             </div>
                             <div class="col d-none d-lg-block">
-                                <div class="card shadow">
+                                <div class="card transparent-bg text-light shadow">
                                     <div class="card-body">
                                         <h5 class="card-title mb-4 text-uppercase fw-bold" >Data Incomes</h5>
-                                        <table class="table table-bordered table-income w-100">
+                                        <table class="table-glass table-bordered table-income w-100">
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
@@ -83,7 +83,7 @@
                     <div class="col">
                         <div class="row row-cols-1 g-4">
                             <div class="col">
-                                <div class="card shadow">
+                                <div class="card transparent-bg shadow">
                                     <div class="card-body">
                                         <h5 class="card-title fw-bold text-uppercase">Outcome</h5>
                                         <div class="mt-4">
@@ -130,7 +130,7 @@
                                                     </div>
                                                 </div>
                                                 <button type="submit"
-                                                    class="btn btn-warning fw-bold text-success">Save</button>
+                                                    class="btn btn-warning fw-bold text-light">Save</button>
                                                 <a href="#outcome" class="btn btn-primary fw-bold">View <i
                                                         class="ri-arrow-down-double-fill"></i></a>
                                             </form>
@@ -139,10 +139,10 @@
                                 </div>
                             </div>
                             <div class="col d-none d-lg-block">
-                                <div class="card shadow">
+                                <div class="card transparent-bg shadow">
                                     <div class="card-body">
                                         <h5 class="card-title mb-4 text-uppercase fw-bold">Data Outcomes</h5>
-                                        <table class="table table-bordered table-outcome">
+                                        <table class="table-glass table-bordered table-outcome">
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
@@ -174,10 +174,10 @@
                     </div>
 
                     <div class="col d-block d-lg-none" id="income">
-                        <div class="card shadow">
+                        <div class="card transparent-bg shadow">
                             <div class="card-body">
                                 <h5 class="card-title mb-4 text-uppercase fw-bold">Data Incomes</h5>
-                                <table class="table table-bordered nowrap table-income" style="width: 100%;">
+                                <table class="table-glass table-bordered nowrap table-income" style="width: 100%;">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -203,10 +203,10 @@
                         </div>
                     </div>
                     <div class="col d-block d-lg-none" id="outcome">
-                        <div class="card shadow">
+                        <div class="card transparent-bg shadow">
                             <div class="card-body">
                                 <h5 class="card-title mb-4 text-uppercase fw-bold outcome">Data Outcomes</h5>
-                                <table class="table table-bordered nowrap table-outcome" style="width: 100%;">
+                                <table class="table-glass table-bordered nowrap table-outcome" style="width: 100%;">
                                     <thead>
                                         <tr>
                                             <th>No</th>
