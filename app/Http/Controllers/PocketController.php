@@ -7,6 +7,7 @@ use App\Models\Outcome;
 use App\Models\Pocket;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Console\Output\Output;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -14,26 +15,15 @@ class PocketController extends Controller
 {
     public function index(Request $request)
     {
-        $currentMonth = now()->month; // Bulan sekarang
-        $currentYear = now()->year;   // Tahun sekarang
-
-        $income = Income::whereMonth('date', $currentMonth)
-            ->whereYear('date', $currentYear)
-            ->get();
-        $outcome = Outcome::whereMonth('date', $currentMonth)
-            ->whereYear('date', $currentYear)
-            ->get();
-
-
-
-        return view('pocket', compact('income', 'outcome'));
+        return view('pocket');
     }
 
     public function tableOutcome(Request $request)
     {
         $currentMonth = now()->month; // Bulan sekarang
         $currentYear = now()->year;   // Tahun sekarang
-        $outcome = Outcome::whereMonth('date', $currentMonth)
+        $outcome = Outcome::where('user_id', Auth::user()->id)
+            ->whereMonth('date', $currentMonth)
             ->whereYear('date', $currentYear)
             ->orderBy('created_at', 'desc')
             ->get();
@@ -68,7 +58,8 @@ class PocketController extends Controller
     {
         $currentMonth = now()->month; // Bulan sekarang
         $currentYear = now()->year;   // Tahun sekarang
-        $income = Income::whereMonth('date', $currentMonth)
+        $income = Income::where('user_id', Auth::user()->id)
+            ->whereMonth('date', $currentMonth)
             ->whereYear('date', $currentYear)
             ->orderBy('created_at', 'desc')
             ->get();
@@ -105,12 +96,15 @@ class PocketController extends Controller
         $currentMonth = now()->month; // Bulan sekarang
         $currentYear = now()->year;   // Tahun sekarang
 
-        $income = Income::whereMonth('date', $currentMonth)
+        $income = Income::where('user_id', Auth::user()->id)
+            ->whereMonth('date', $currentMonth)
             ->whereYear('date', $currentYear)
-            ->get();
-        $outcome = Outcome::whereMonth('date', $currentMonth)
+            ->get(['income', 'date']);
+
+        $outcome = Outcome::where('user_id', Auth::user()->id)
+            ->whereMonth('date', $currentMonth)
             ->whereYear('date', $currentYear)
-            ->get();
+            ->get(['outcome', 'date']);
 
         $in = ($income->sum('income') ?? 0) - ($outcome->sum('outcome') ?? 0);
         $date = $income->max('date');
@@ -122,23 +116,26 @@ class PocketController extends Controller
     {
         $currentMonth = now()->month; // Bulan sekarang
         $currentYear = now()->year;   // Tahun sekarang
-        $outcome = Outcome::whereMonth('date', $currentMonth)
+        $outcome = Outcome::where('user_id', Auth::user()->id)
+            ->whereMonth('date', $currentMonth)
             ->whereYear('date', $currentYear)
-            ->get();
+            ->get(['outcome', 'date']);
+
 
         $total = $outcome->sum('outcome') ?? 0;
         $date = Carbon::parse(now())->translatedFormat('d F Y');
 
         return response()->json(['total' => $total, 'date' => $date]);
     }
-    
+
     public function getTotalIncome()
     {
         $currentMonth = now()->month; // Bulan sekarang
         $currentYear = now()->year;   // Tahun sekarang
-        $income = Income::whereMonth('date', $currentMonth)
+        $income = Income::where('user_id', Auth::user()->id)
+            ->whereMonth('date', $currentMonth)
             ->whereYear('date', $currentYear)
-            ->get();
+            ->get(['income', 'date']);
 
         $total = $income->sum('income') ?? 0;
         $date = Carbon::parse(now())->translatedFormat('d F Y');
@@ -163,7 +160,8 @@ class PocketController extends Controller
         // Simpan data ke tabel Pocket
         Income::create([
             'income' => $request->income,
-            'date'   => $request->date
+            'date'   => $request->date,
+            'user_id' => Auth::user()->id
         ]);
 
         // Redirect atau berikan response sesuai kebutuhan Anda
@@ -190,7 +188,8 @@ class PocketController extends Controller
         Outcome::create([
             'outcome' => $request->outcome,
             'deskripsi' => $request->deskripsi,
-            'date'   => $request->date
+            'date'   => $request->date,
+            'user_id' => Auth::user()->id
         ]);
 
         // Redirect atau berikan response sesuai kebutuhan Anda

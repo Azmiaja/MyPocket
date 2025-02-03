@@ -3,10 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ForgotPasswordController;
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\PocketController;
-use App\Mail\SendEmail;
-use Illuminate\Support\Facades\Mail;
 
 Route::middleware(['web'])->group(function () {
     Route::middleware('guest')->group(function () {
@@ -50,15 +47,4 @@ Route::middleware(['web'])->group(function () {
             Route::delete('/outcome/{id}', [PocketController::class, 'destroyOutcome']);
         });
     });
-});
-
-
-Route::get('/mail/send', function () {
-    $data = [
-        'subject' => 'Testing Kirim Email',
-        'title' => 'Testing Kirim Email',
-        'body' => 'Ini adalah email uji coba dari Tutorial Laravel: Send Email Via SMTP GMAIL @ qadrLabs.com'
-    ];
-
-    Mail::to('azmidwi1121@gmail.com')->send(new SendEmail($data));
 });
